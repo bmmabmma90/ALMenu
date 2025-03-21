@@ -103,8 +103,7 @@ format of this second file must be:
 
 [Further instructions](https://docs.google.com/document/d/1WldPWcaWwZNBu-X0_e7LzybXyoVedJl84KTDR-gE4fo/edit?usp=sharing) are available (please comment if issues)
 
-v.0.1.1
-'''
+v.0.1.2'''
     st.markdown(multi)
 
 elif st.session_state.menu_choice == "Overwrite" :
