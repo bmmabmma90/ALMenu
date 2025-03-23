@@ -1,5 +1,5 @@
 # AL_Menu
-# Streamlit menu selection and front end for AngelList
+# Streamlit menu selection and front end for [AngelList] startup data analysis
 
 import streamlit as st
 import pandas as pd
@@ -38,7 +38,7 @@ st.title("Startup Data Analyser")
 if 'force_load' not in st.session_state: 
     st.session_state.force_load = False
 if 'advanced_user' not in st.session_state:
-    st.session_state.advanced_user = True
+    st.session_state.advanced_user = False
 if 'menu_choice' not in st.session_state:
     st.session_state.menu_choice = "About"
 if 'has_data_file' not in st.session_state: 
@@ -227,6 +227,26 @@ elif st.session_state.menu_choice == "Load Data":
     else:
         # Action 1: Load in Data
         uploaded_file = st.file_uploader("Choose the file in a CSV [AngelList] format", type="csv")
+
+        # Add a button to load test data
+        if st.button("Load Test Data"):
+            test_data_url = "https://drive.google.com/file/d/12Z9Pjb1hK62x8sxDCr7oJiNClysJP-gP/view?usp=share_link"
+            # Extract the file ID from the URL
+            file_id = test_data_url.split('/d/')[1].split('/')[0]
+            # Construct the direct download URL
+            download_url = f"https://drive.google.com/uc?export=download&id={file_id}"
+            try:
+                df = pd.read_csv(download_url, header=1, skip_blank_lines=True)
+                st.session_state.has_angellist_data = has_angellist_data(download_url)
+                st.session_state.has_data_file = True
+                st.session_state.total_value = 0
+                st.session_state.df = df
+                with st.container(height=200):
+                    st.write(df)
+            except pd.errors.ParserError:
+                st.write(f"Error: Could not parse test data file as a CSV file. Please ensure it's a valid CSV.")
+            except Exception as e:
+                st.write(f"An unexpected error occurred: {e}")
 
     if force_load == False and uploaded_file is not None:
         try:
