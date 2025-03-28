@@ -241,6 +241,10 @@ elif st.session_state.menu_choice == "Load Data":
                 st.session_state.has_data_file = True
                 st.session_state.total_value = 0
                 st.session_state.df = df
+                if "overall_XIRR" in st.session_state:
+                    print("Removing overall XIRR")
+                    del st.session_state["overall_XIRR"]
+                
                 with st.container(height=200):
                     st.write(df)
             except pd.errors.ParserError:
@@ -259,6 +263,11 @@ elif st.session_state.menu_choice == "Load Data":
             st.session_state.has_data_file = True
             st.session_state.total_value = 0 #Reset this so it doesn't carry over from another session
             st.session_state.df = df
+
+            if "overall_XIRR" in st.session_state:
+                print("Removing overall XIRR")
+                del st.session_state["overall_XIRR"]
+
             with st.container(height=200):
                 st.write(df)
         except pd.errors.ParserError:
